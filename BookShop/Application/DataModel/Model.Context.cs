@@ -25,6 +25,18 @@ namespace Application.DataModel
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<tblVersion> tblVersion { get; set; }
+        public virtual DbSet<PersonType> PersonType { get; set; }
+        public virtual DbSet<tblBook> tblBook { get; set; }
+        public virtual DbSet<tblCategory> tblCategory { get; set; }
+        public virtual DbSet<tblComment> tblComment { get; set; }
+        public virtual DbSet<tblDiscount> tblDiscount { get; set; }
+        public virtual DbSet<tblInOut> tblInOut { get; set; }
+        public virtual DbSet<tblInOutType> tblInOutType { get; set; }
+        public virtual DbSet<tblNotification> tblNotification { get; set; }
+        public virtual DbSet<tblOrder> tblOrder { get; set; }
+        public virtual DbSet<tblOrderDetail> tblOrderDetail { get; set; }
+        public virtual DbSet<tblPerson> tblPerson { get; set; }
+        public virtual DbSet<tblStatus> tblStatus { get; set; }
+        public virtual DbSet<tblAppVersion> tblAppVersion { get; set; }
     }
 }

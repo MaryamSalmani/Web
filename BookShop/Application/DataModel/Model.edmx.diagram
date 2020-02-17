@@ -4,8 +4,40 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6dcb175e15b34d37ab5c65b0f2b1318d" Name="Diagram1">
-        <EntityTypeShape EntityType="ShopModel.tblVersion" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+      <Diagram DiagramId="6dcb175e15b34d37ab5c65b0f2b1318d" Name="Diagram1" ZoomLevel="98">
+        <EntityTypeShape EntityType="ShopModel.PersonType" Width="1.5" PointX="3.75" PointY="8.5" />
+        <EntityTypeShape EntityType="ShopModel.tblBook" Width="1.5" PointX="6" PointY="0.75" />
+        <EntityTypeShape EntityType="ShopModel.tblCategory" Width="1.5" PointX="3.75" PointY="2.5" />
+        <EntityTypeShape EntityType="ShopModel.tblComment" Width="1.5" PointX="8.25" PointY="7.75" />
+        <EntityTypeShape EntityType="ShopModel.tblDiscount" Width="1.5" PointX="11.25" PointY="7.75" />
+        <EntityTypeShape EntityType="ShopModel.tblInOut" Width="1.5" PointX="18.75" PointY="7.25" />
+        <EntityTypeShape EntityType="ShopModel.tblInOutType" Width="1.5" PointX="16.5" PointY="5.5" />
+        <EntityTypeShape EntityType="ShopModel.tblNotification" Width="1.5" PointX="8.25" PointY="16" />
+        <EntityTypeShape EntityType="ShopModel.tblOrder" Width="1.5" PointX="13.5" PointY="7.375" />
+        <EntityTypeShape EntityType="ShopModel.tblOrderDetail" Width="1.5" PointX="15.75" PointY="8" />
+        <EntityTypeShape EntityType="ShopModel.tblPerson" Width="1.5" PointX="6" PointY="7" />
+        <EntityTypeShape EntityType="ShopModel.tblStatus" Width="1.5" PointX="11.25" PointY="4.5" />
+        <EntityTypeShape EntityType="ShopModel.tblAppVersion" Width="1.5" PointX="0.75" PointY="4.5" />
+        <AssociationConnector Association="ShopModel.FK_tblPerson_PersonType" />
+        <AssociationConnector Association="ShopModel.FK_tblCategory_tblBook" />
+        <AssociationConnector Association="ShopModel.FK_tblComment_tblBook" />
+        <AssociationConnector Association="ShopModel.FK_tblDiscount_tblBook" />
+        <AssociationConnector Association="ShopModel.FK_tblInOut_tblBook" />
+        <AssociationConnector Association="ShopModel.FK_tblOrderDetail_tblBook" />
+        <AssociationConnector Association="ShopModel.FK_tblComment_tblComment" />
+        <AssociationConnector Association="ShopModel.FK_tblComment_tblPerson" />
+        <AssociationConnector Association="ShopModel.FK_tblDiscount_tblPerson" />
+        <AssociationConnector Association="ShopModel.FK_tblOrder_tblDiscount" />
+        <AssociationConnector Association="ShopModel.FK_tblOrderDetail_tblDiscount" />
+        <AssociationConnector Association="ShopModel.FK_tblInOut_tblOrder" />
+        <AssociationConnector Association="ShopModel.FK_tblInOut_tblPerson" />
+        <AssociationConnector Association="ShopModel.FK_tblInOut_tblPerson1" />
+        <AssociationConnector Association="ShopModel.FK_tblInOut_tblPerson2" />
+        <AssociationConnector Association="ShopModel.FK_tblInOut_tblTypeInOut" />
+        <AssociationConnector Association="ShopModel.FK_tblNotif_tblNotification" />
+        <AssociationConnector Association="ShopModel.FK_tblOrder_tblPerson" />
+        <AssociationConnector Association="ShopModel.FK_tblOrder_tblStatus" />
+        <AssociationConnector Association="ShopModel.FK_tblOrderDetail_tblOrder" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

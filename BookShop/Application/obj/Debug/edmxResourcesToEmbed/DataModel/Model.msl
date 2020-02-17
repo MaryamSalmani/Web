@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ShopModelStoreContainer" CdmEntityContainer="ShopEntities">
+    <EntitySetMapping Name="tblVersion">
+      <EntityTypeMapping TypeName="ShopModel.tblVersion">
+        <MappingFragment StoreEntitySet="tblVersion">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="versionExe" ColumnName="versionExe" />
+          <ScalarProperty Name="versionDatabase" ColumnName="versionDatabase" />
+          <ScalarProperty Name="versionWeb" ColumnName="versionWeb" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

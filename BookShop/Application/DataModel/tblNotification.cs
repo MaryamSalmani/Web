@@ -12,11 +12,13 @@ namespace Application.DataModel
     using System;
     using System.Collections.Generic;
     
-    public partial class tblVersion
+    public partial class tblNotification
     {
-        public int id { get; set; }
-        public string versionExe { get; set; }
-        public string versionDatabase { get; set; }
-        public string versionWeb { get; set; }
+        public int NotificationID { get; set; }
+        public string NotificationDescription { get; set; }
+        public bool IsSee { get; set; }
+        public int PersonID { get; set; }
+    
+        public virtual tblPerson tblPerson { get; set; }
     }
 }

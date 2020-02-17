@@ -4,49 +4,1185 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="tblVersion">
+    <Schema Namespace="ShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="PersonType">
           <Key>
-            <PropertyRef Name="id" />
+            <PropertyRef Name="PersonTypeID" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="versionExe" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="versionDatabase" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="versionWeb" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PersonTypeID" Type="int" Nullable="false" />
+          <Property Name="PersonTypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Shopping.dbo.tblAppVersion' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tblAppVersion">
+          <Key>
+            <PropertyRef Name="AppName" />
+            <PropertyRef Name="AppVersion" />
+            <PropertyRef Name="DatabaseVersion" />
+          </Key>
+          <Property Name="AppName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AppVersion" Type="float" Nullable="false" />
+          <Property Name="DatabaseVersion" Type="float" Nullable="false" />
+          <Property Name="AppDescription" Type="text" />
+        </EntityType>
+        <EntityType Name="tblBook">
+          <Key>
+            <PropertyRef Name="BookID" />
+          </Key>
+          <Property Name="BookID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LatinName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Price" Type="float" Nullable="false" />
+          <Property Name="Publisher" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Writer" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Translator" Type="nvarchar" MaxLength="50" />
+          <Property Name="ISBN" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PrintTurns" Type="smallint" Nullable="false" />
+          <Property Name="PieceOfBook" Type="text" />
+          <Property Name="Summary" Type="text" />
+          <Property Name="PageNumber" Type="smallint" Nullable="false" />
+          <Property Name="BookPicture" Type="nvarchar(max)" />
+          <Property Name="IsShowing" Type="bit" Nullable="false" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="BookLanguage" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblCategory">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblComment">
+          <Key>
+            <PropertyRef Name="CommentID" />
+          </Key>
+          <Property Name="CommentID" Type="int" Nullable="false" />
+          <Property Name="CommentDescription" Type="text" Nullable="false" />
+          <Property Name="CommentLike" Type="int" Nullable="false" />
+          <Property Name="CommentDisLike" Type="int" Nullable="false" />
+          <Property Name="CommentDate" Type="datetime" Nullable="false" />
+          <Property Name="BookID" Type="int" Nullable="false" />
+          <Property Name="PersonID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblDiscount">
+          <Key>
+            <PropertyRef Name="DiscountID" />
+          </Key>
+          <Property Name="DiscountID" Type="int" Nullable="false" />
+          <Property Name="DiscountPersent" Type="int" Nullable="false" />
+          <Property Name="Discount" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DiscountStartDate" Type="date" Nullable="false" />
+          <Property Name="DiscountEndDate" Type="date" Nullable="false" />
+          <Property Name="PersonID" Type="int" />
+          <Property Name="BookID" Type="int" />
+        </EntityType>
+        <EntityType Name="tblInOut">
+          <Key>
+            <PropertyRef Name="StoreID" />
+          </Key>
+          <Property Name="StoreID" Type="int" Nullable="false" />
+          <Property Name="BookNumber" Type="int" Nullable="false" />
+          <Property Name="InOutTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="InOutDate" Type="date" Nullable="false" />
+          <Property Name="OwnerID" Type="int" Nullable="false" />
+          <Property Name="DestStoreID" Type="int" Nullable="false" />
+          <Property Name="BookID" Type="int" Nullable="false" />
+          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="InOutTypeID" Type="int" Nullable="false" />
+          <Property Name="AdminID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblInOutType">
+          <Key>
+            <PropertyRef Name="InOutTypeID" />
+          </Key>
+          <Property Name="InOutTypeID" Type="int" Nullable="false" />
+          <Property Name="InOutTypeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblNotification">
+          <Key>
+            <PropertyRef Name="NotificationID" />
+          </Key>
+          <Property Name="NotificationID" Type="int" Nullable="false" />
+          <Property Name="NotificationDescription" Type="text" Nullable="false" />
+          <Property Name="IsSee" Type="bit" Nullable="false" />
+          <Property Name="PersonID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblOrder">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="OrderNumber" Type="int" Nullable="false" />
+          <Property Name="OrderCost" Type="float" Nullable="false" />
+          <Property Name="OrderPayDate" Type="datetime" Nullable="false" />
+          <Property Name="OrderDeliveryDate" Type="datetime" Nullable="false" />
+          <Property Name="OrderInsertDate" Type="datetime" Nullable="false" />
+          <Property Name="PersonID" Type="int" Nullable="false" />
+          <Property Name="DiscountID" Type="int" Nullable="false" />
+          <Property Name="StatusID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblOrderDetail">
+          <Key>
+            <PropertyRef Name="OrderDetailID" />
+          </Key>
+          <Property Name="OrderDetailID" Type="int" Nullable="false" />
+          <Property Name="OrderDetailPrice" Type="float" Nullable="false" />
+          <Property Name="DiscountID" Type="int" />
+          <Property Name="BookID" Type="int" Nullable="false" />
+          <Property Name="OrderID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblPerson">
+          <Key>
+            <PropertyRef Name="PersonID" />
+          </Key>
+          <Property Name="PersonID" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Tell" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Birthday" Type="date" />
+          <Property Name="IsReviewer" Type="bit" />
+          <Property Name="PersonTypeID" Type="int" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserPass" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblStatus">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="int" Nullable="false" />
+          <Property Name="StatusName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tblCategory_tblBook">
+          <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="1" />
+          <End Role="tblBook" Type="Self.tblBook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCategory">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="tblBook">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblComment_tblBook">
+          <End Role="tblBook" Type="Self.tblBook" Multiplicity="1" />
+          <End Role="tblComment" Type="Self.tblComment" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="tblBook">
+              <PropertyRef Name="BookID" />
+            </Principal>
+            <Dependent Role="tblComment">
+              <PropertyRef Name="CommentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblComment_tblComment">
+          <End Role="tblComment" Type="Self.tblComment" Multiplicity="1" />
+          <End Role="tblComment1" Type="Self.tblComment" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="tblComment">
+              <PropertyRef Name="CommentID" />
+            </Principal>
+            <Dependent Role="tblComment1">
+              <PropertyRef Name="CommentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblComment_tblPerson">
+          <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="1" />
+          <End Role="tblComment" Type="Self.tblComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPerson">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="tblComment">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDiscount_tblBook">
+          <End Role="tblBook" Type="Self.tblBook" Multiplicity="0..1" />
+          <End Role="tblDiscount" Type="Self.tblDiscount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBook">
+              <PropertyRef Name="BookID" />
+            </Principal>
+            <Dependent Role="tblDiscount">
+              <PropertyRef Name="BookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDiscount_tblPerson">
+          <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="0..1" />
+          <End Role="tblDiscount" Type="Self.tblDiscount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPerson">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="tblDiscount">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblInOut_tblBook">
+          <End Role="tblBook" Type="Self.tblBook" Multiplicity="1" />
+          <End Role="tblInOut" Type="Self.tblInOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBook">
+              <PropertyRef Name="BookID" />
+            </Principal>
+            <Dependent Role="tblInOut">
+              <PropertyRef Name="BookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblInOut_tblOrder">
+          <End Role="tblOrder" Type="Self.tblOrder" Multiplicity="1" />
+          <End Role="tblInOut" Type="Self.tblInOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOrder">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="tblInOut">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblInOut_tblPerson">
+          <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="1" />
+          <End Role="tblInOut" Type="Self.tblInOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPerson">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="tblInOut">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblInOut_tblPerson1">
+          <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="1" />
+          <End Role="tblInOut" Type="Self.tblInOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPerson">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="tblInOut">
+              <PropertyRef Name="DestStoreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblInOut_tblPerson2">
+          <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="1" />
+          <End Role="tblInOut" Type="Self.tblInOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPerson">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="tblInOut">
+              <PropertyRef Name="AdminID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblInOut_tblTypeInOut">
+          <End Role="tblInOutType" Type="Self.tblInOutType" Multiplicity="1" />
+          <End Role="tblInOut" Type="Self.tblInOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblInOutType">
+              <PropertyRef Name="InOutTypeID" />
+            </Principal>
+            <Dependent Role="tblInOut">
+              <PropertyRef Name="InOutTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblNotif_tblNotification">
+          <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="1" />
+          <End Role="tblNotification" Type="Self.tblNotification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPerson">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="tblNotification">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrder_tblDiscount">
+          <End Role="tblDiscount" Type="Self.tblDiscount" Multiplicity="1" />
+          <End Role="tblOrder" Type="Self.tblOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDiscount">
+              <PropertyRef Name="DiscountID" />
+            </Principal>
+            <Dependent Role="tblOrder">
+              <PropertyRef Name="DiscountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrder_tblPerson">
+          <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="1" />
+          <End Role="tblOrder" Type="Self.tblOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPerson">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="tblOrder">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrder_tblStatus">
+          <End Role="tblStatus" Type="Self.tblStatus" Multiplicity="1" />
+          <End Role="tblOrder" Type="Self.tblOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStatus">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="tblOrder">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrderDetail_tblBook">
+          <End Role="tblBook" Type="Self.tblBook" Multiplicity="1" />
+          <End Role="tblOrderDetail" Type="Self.tblOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBook">
+              <PropertyRef Name="BookID" />
+            </Principal>
+            <Dependent Role="tblOrderDetail">
+              <PropertyRef Name="BookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrderDetail_tblDiscount">
+          <End Role="tblDiscount" Type="Self.tblDiscount" Multiplicity="0..1" />
+          <End Role="tblOrderDetail" Type="Self.tblOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDiscount">
+              <PropertyRef Name="DiscountID" />
+            </Principal>
+            <Dependent Role="tblOrderDetail">
+              <PropertyRef Name="DiscountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrderDetail_tblOrder">
+          <End Role="tblOrder" Type="Self.tblOrder" Multiplicity="1" />
+          <End Role="tblOrderDetail" Type="Self.tblOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOrder">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="tblOrderDetail">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPerson_PersonType">
+          <End Role="PersonType" Type="Self.PersonType" Multiplicity="0..1" />
+          <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonType">
+              <PropertyRef Name="PersonTypeID" />
+            </Principal>
+            <Dependent Role="tblPerson">
+              <PropertyRef Name="PersonTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ShopModelStoreContainer">
-          <EntitySet Name="tblVersion" EntityType="Self.tblVersion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PersonType" EntityType="Self.PersonType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblBook" EntityType="Self.tblBook" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCategory" EntityType="Self.tblCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblComment" EntityType="Self.tblComment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblDiscount" EntityType="Self.tblDiscount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblInOut" EntityType="Self.tblInOut" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblInOutType" EntityType="Self.tblInOutType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblNotification" EntityType="Self.tblNotification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblOrder" EntityType="Self.tblOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblOrderDetail" EntityType="Self.tblOrderDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPerson" EntityType="Self.tblPerson" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblStatus" EntityType="Self.tblStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAppVersion" EntityType="Self.tblAppVersion" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tblAppVersion].[AppName] AS [AppName], 
+    [tblAppVersion].[AppVersion] AS [AppVersion], 
+    [tblAppVersion].[DatabaseVersion] AS [DatabaseVersion], 
+    [tblAppVersion].[AppDescription] AS [AppDescription]
+    FROM [dbo].[tblAppVersion] AS [tblAppVersion]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_tblCategory_tblBook" Association="Self.FK_tblCategory_tblBook">
+            <End Role="tblCategory" EntitySet="tblCategory" />
+            <End Role="tblBook" EntitySet="tblBook" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblComment_tblBook" Association="Self.FK_tblComment_tblBook">
+            <End Role="tblBook" EntitySet="tblBook" />
+            <End Role="tblComment" EntitySet="tblComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblComment_tblComment" Association="Self.FK_tblComment_tblComment">
+            <End Role="tblComment" EntitySet="tblComment" />
+            <End Role="tblComment1" EntitySet="tblComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblComment_tblPerson" Association="Self.FK_tblComment_tblPerson">
+            <End Role="tblPerson" EntitySet="tblPerson" />
+            <End Role="tblComment" EntitySet="tblComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDiscount_tblBook" Association="Self.FK_tblDiscount_tblBook">
+            <End Role="tblBook" EntitySet="tblBook" />
+            <End Role="tblDiscount" EntitySet="tblDiscount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDiscount_tblPerson" Association="Self.FK_tblDiscount_tblPerson">
+            <End Role="tblPerson" EntitySet="tblPerson" />
+            <End Role="tblDiscount" EntitySet="tblDiscount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblInOut_tblBook" Association="Self.FK_tblInOut_tblBook">
+            <End Role="tblBook" EntitySet="tblBook" />
+            <End Role="tblInOut" EntitySet="tblInOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblInOut_tblOrder" Association="Self.FK_tblInOut_tblOrder">
+            <End Role="tblOrder" EntitySet="tblOrder" />
+            <End Role="tblInOut" EntitySet="tblInOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblInOut_tblPerson" Association="Self.FK_tblInOut_tblPerson">
+            <End Role="tblPerson" EntitySet="tblPerson" />
+            <End Role="tblInOut" EntitySet="tblInOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblInOut_tblPerson1" Association="Self.FK_tblInOut_tblPerson1">
+            <End Role="tblPerson" EntitySet="tblPerson" />
+            <End Role="tblInOut" EntitySet="tblInOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblInOut_tblPerson2" Association="Self.FK_tblInOut_tblPerson2">
+            <End Role="tblPerson" EntitySet="tblPerson" />
+            <End Role="tblInOut" EntitySet="tblInOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblInOut_tblTypeInOut" Association="Self.FK_tblInOut_tblTypeInOut">
+            <End Role="tblInOutType" EntitySet="tblInOutType" />
+            <End Role="tblInOut" EntitySet="tblInOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblNotif_tblNotification" Association="Self.FK_tblNotif_tblNotification">
+            <End Role="tblPerson" EntitySet="tblPerson" />
+            <End Role="tblNotification" EntitySet="tblNotification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrder_tblDiscount" Association="Self.FK_tblOrder_tblDiscount">
+            <End Role="tblDiscount" EntitySet="tblDiscount" />
+            <End Role="tblOrder" EntitySet="tblOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrder_tblPerson" Association="Self.FK_tblOrder_tblPerson">
+            <End Role="tblPerson" EntitySet="tblPerson" />
+            <End Role="tblOrder" EntitySet="tblOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrder_tblStatus" Association="Self.FK_tblOrder_tblStatus">
+            <End Role="tblStatus" EntitySet="tblStatus" />
+            <End Role="tblOrder" EntitySet="tblOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrderDetail_tblBook" Association="Self.FK_tblOrderDetail_tblBook">
+            <End Role="tblBook" EntitySet="tblBook" />
+            <End Role="tblOrderDetail" EntitySet="tblOrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrderDetail_tblDiscount" Association="Self.FK_tblOrderDetail_tblDiscount">
+            <End Role="tblDiscount" EntitySet="tblDiscount" />
+            <End Role="tblOrderDetail" EntitySet="tblOrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrderDetail_tblOrder" Association="Self.FK_tblOrderDetail_tblOrder">
+            <End Role="tblOrder" EntitySet="tblOrder" />
+            <End Role="tblOrderDetail" EntitySet="tblOrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPerson_PersonType" Association="Self.FK_tblPerson_PersonType">
+            <End Role="PersonType" EntitySet="PersonType" />
+            <End Role="tblPerson" EntitySet="tblPerson" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="tblVersion">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="versionExe" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="versionDatabase" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="versionWeb" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
         <EntityContainer Name="ShopEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="tblVersion" EntityType="Self.tblVersion" />
+          <EntitySet Name="PersonType" EntityType="ShopModel.PersonType" />
+          <EntitySet Name="tblBook" EntityType="ShopModel.tblBook" />
+          <EntitySet Name="tblCategory" EntityType="ShopModel.tblCategory" />
+          <EntitySet Name="tblComment" EntityType="ShopModel.tblComment" />
+          <EntitySet Name="tblDiscount" EntityType="ShopModel.tblDiscount" />
+          <EntitySet Name="tblInOut" EntityType="ShopModel.tblInOut" />
+          <EntitySet Name="tblInOutType" EntityType="ShopModel.tblInOutType" />
+          <EntitySet Name="tblNotification" EntityType="ShopModel.tblNotification" />
+          <EntitySet Name="tblOrder" EntityType="ShopModel.tblOrder" />
+          <EntitySet Name="tblOrderDetail" EntityType="ShopModel.tblOrderDetail" />
+          <EntitySet Name="tblPerson" EntityType="ShopModel.tblPerson" />
+          <EntitySet Name="tblStatus" EntityType="ShopModel.tblStatus" />
+          <EntitySet Name="tblAppVersion" EntityType="ShopModel.tblAppVersion" />
+          <AssociationSet Name="FK_tblPerson_PersonType" Association="ShopModel.FK_tblPerson_PersonType">
+            <End Role="PersonType" EntitySet="PersonType" />
+            <End Role="tblPerson" EntitySet="tblPerson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblCategory_tblBook" Association="ShopModel.FK_tblCategory_tblBook">
+            <End Role="tblCategory" EntitySet="tblCategory" />
+            <End Role="tblBook" EntitySet="tblBook" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblComment_tblBook" Association="ShopModel.FK_tblComment_tblBook">
+            <End Role="tblBook" EntitySet="tblBook" />
+            <End Role="tblComment" EntitySet="tblComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDiscount_tblBook" Association="ShopModel.FK_tblDiscount_tblBook">
+            <End Role="tblBook" EntitySet="tblBook" />
+            <End Role="tblDiscount" EntitySet="tblDiscount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblInOut_tblBook" Association="ShopModel.FK_tblInOut_tblBook">
+            <End Role="tblBook" EntitySet="tblBook" />
+            <End Role="tblInOut" EntitySet="tblInOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrderDetail_tblBook" Association="ShopModel.FK_tblOrderDetail_tblBook">
+            <End Role="tblBook" EntitySet="tblBook" />
+            <End Role="tblOrderDetail" EntitySet="tblOrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblComment_tblComment" Association="ShopModel.FK_tblComment_tblComment">
+            <End Role="tblComment" EntitySet="tblComment" />
+            <End Role="tblComment1" EntitySet="tblComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblComment_tblPerson" Association="ShopModel.FK_tblComment_tblPerson">
+            <End Role="tblPerson" EntitySet="tblPerson" />
+            <End Role="tblComment" EntitySet="tblComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblDiscount_tblPerson" Association="ShopModel.FK_tblDiscount_tblPerson">
+            <End Role="tblPerson" EntitySet="tblPerson" />
+            <End Role="tblDiscount" EntitySet="tblDiscount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrder_tblDiscount" Association="ShopModel.FK_tblOrder_tblDiscount">
+            <End Role="tblDiscount" EntitySet="tblDiscount" />
+            <End Role="tblOrder" EntitySet="tblOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrderDetail_tblDiscount" Association="ShopModel.FK_tblOrderDetail_tblDiscount">
+            <End Role="tblDiscount" EntitySet="tblDiscount" />
+            <End Role="tblOrderDetail" EntitySet="tblOrderDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblInOut_tblOrder" Association="ShopModel.FK_tblInOut_tblOrder">
+            <End Role="tblOrder" EntitySet="tblOrder" />
+            <End Role="tblInOut" EntitySet="tblInOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblInOut_tblPerson" Association="ShopModel.FK_tblInOut_tblPerson">
+            <End Role="tblPerson" EntitySet="tblPerson" />
+            <End Role="tblInOut" EntitySet="tblInOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblInOut_tblPerson1" Association="ShopModel.FK_tblInOut_tblPerson1">
+            <End Role="tblPerson" EntitySet="tblPerson" />
+            <End Role="tblInOut" EntitySet="tblInOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblInOut_tblPerson2" Association="ShopModel.FK_tblInOut_tblPerson2">
+            <End Role="tblPerson" EntitySet="tblPerson" />
+            <End Role="tblInOut" EntitySet="tblInOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblInOut_tblTypeInOut" Association="ShopModel.FK_tblInOut_tblTypeInOut">
+            <End Role="tblInOutType" EntitySet="tblInOutType" />
+            <End Role="tblInOut" EntitySet="tblInOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblNotif_tblNotification" Association="ShopModel.FK_tblNotif_tblNotification">
+            <End Role="tblPerson" EntitySet="tblPerson" />
+            <End Role="tblNotification" EntitySet="tblNotification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrder_tblPerson" Association="ShopModel.FK_tblOrder_tblPerson">
+            <End Role="tblPerson" EntitySet="tblPerson" />
+            <End Role="tblOrder" EntitySet="tblOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrder_tblStatus" Association="ShopModel.FK_tblOrder_tblStatus">
+            <End Role="tblStatus" EntitySet="tblStatus" />
+            <End Role="tblOrder" EntitySet="tblOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrderDetail_tblOrder" Association="ShopModel.FK_tblOrderDetail_tblOrder">
+            <End Role="tblOrder" EntitySet="tblOrder" />
+            <End Role="tblOrderDetail" EntitySet="tblOrderDetail" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="PersonType">
+          <Key>
+            <PropertyRef Name="PersonTypeID" />
+          </Key>
+          <Property Name="PersonTypeID" Type="Int32" Nullable="false" />
+          <Property Name="PersonTypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblPerson" Relationship="ShopModel.FK_tblPerson_PersonType" FromRole="PersonType" ToRole="tblPerson" />
+        </EntityType>
+        <EntityType Name="tblBook">
+          <Key>
+            <PropertyRef Name="BookID" />
+          </Key>
+          <Property Name="BookID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LatinName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <Property Name="Publisher" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Writer" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Translator" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ISBN" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PrintTurns" Type="Int16" Nullable="false" />
+          <Property Name="PieceOfBook" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Summary" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PageNumber" Type="Int16" Nullable="false" />
+          <Property Name="BookPicture" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsShowing" Type="Boolean" Nullable="false" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="BookLanguage" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblCategory" Relationship="ShopModel.FK_tblCategory_tblBook" FromRole="tblBook" ToRole="tblCategory" />
+          <NavigationProperty Name="tblComment" Relationship="ShopModel.FK_tblComment_tblBook" FromRole="tblBook" ToRole="tblComment" />
+          <NavigationProperty Name="tblDiscount" Relationship="ShopModel.FK_tblDiscount_tblBook" FromRole="tblBook" ToRole="tblDiscount" />
+          <NavigationProperty Name="tblInOut" Relationship="ShopModel.FK_tblInOut_tblBook" FromRole="tblBook" ToRole="tblInOut" />
+          <NavigationProperty Name="tblOrderDetail" Relationship="ShopModel.FK_tblOrderDetail_tblBook" FromRole="tblBook" ToRole="tblOrderDetail" />
+        </EntityType>
+        <EntityType Name="tblCategory">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="CategoryName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblBook" Relationship="ShopModel.FK_tblCategory_tblBook" FromRole="tblCategory" ToRole="tblBook" />
+        </EntityType>
+        <EntityType Name="tblComment">
+          <Key>
+            <PropertyRef Name="CommentID" />
+          </Key>
+          <Property Name="CommentID" Type="Int32" Nullable="false" />
+          <Property Name="CommentDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CommentLike" Type="Int32" Nullable="false" />
+          <Property Name="CommentDisLike" Type="Int32" Nullable="false" />
+          <Property Name="CommentDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="BookID" Type="Int32" Nullable="false" />
+          <Property Name="PersonID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblBook" Relationship="ShopModel.FK_tblComment_tblBook" FromRole="tblComment" ToRole="tblBook" />
+          <NavigationProperty Name="tblComment1" Relationship="ShopModel.FK_tblComment_tblComment" FromRole="tblComment" ToRole="tblComment1" />
+          <NavigationProperty Name="tblComment2" Relationship="ShopModel.FK_tblComment_tblComment" FromRole="tblComment1" ToRole="tblComment" />
+          <NavigationProperty Name="tblPerson" Relationship="ShopModel.FK_tblComment_tblPerson" FromRole="tblComment" ToRole="tblPerson" />
+        </EntityType>
+        <EntityType Name="tblDiscount">
+          <Key>
+            <PropertyRef Name="DiscountID" />
+          </Key>
+          <Property Name="DiscountID" Type="Int32" Nullable="false" />
+          <Property Name="DiscountPersent" Type="Int32" Nullable="false" />
+          <Property Name="Discount" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DiscountStartDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DiscountEndDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PersonID" Type="Int32" />
+          <Property Name="BookID" Type="Int32" />
+          <NavigationProperty Name="tblBook" Relationship="ShopModel.FK_tblDiscount_tblBook" FromRole="tblDiscount" ToRole="tblBook" />
+          <NavigationProperty Name="tblPerson" Relationship="ShopModel.FK_tblDiscount_tblPerson" FromRole="tblDiscount" ToRole="tblPerson" />
+          <NavigationProperty Name="tblOrder" Relationship="ShopModel.FK_tblOrder_tblDiscount" FromRole="tblDiscount" ToRole="tblOrder" />
+          <NavigationProperty Name="tblOrderDetail" Relationship="ShopModel.FK_tblOrderDetail_tblDiscount" FromRole="tblDiscount" ToRole="tblOrderDetail" />
+        </EntityType>
+        <EntityType Name="tblInOut">
+          <Key>
+            <PropertyRef Name="StoreID" />
+          </Key>
+          <Property Name="StoreID" Type="Int32" Nullable="false" />
+          <Property Name="BookNumber" Type="Int32" Nullable="false" />
+          <Property Name="InOutTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="InOutDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="OwnerID" Type="Int32" Nullable="false" />
+          <Property Name="DestStoreID" Type="Int32" Nullable="false" />
+          <Property Name="BookID" Type="Int32" Nullable="false" />
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <Property Name="InOutTypeID" Type="Int32" Nullable="false" />
+          <Property Name="AdminID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblBook" Relationship="ShopModel.FK_tblInOut_tblBook" FromRole="tblInOut" ToRole="tblBook" />
+          <NavigationProperty Name="tblOrder" Relationship="ShopModel.FK_tblInOut_tblOrder" FromRole="tblInOut" ToRole="tblOrder" />
+          <NavigationProperty Name="tblPerson" Relationship="ShopModel.FK_tblInOut_tblPerson" FromRole="tblInOut" ToRole="tblPerson" />
+          <NavigationProperty Name="tblPerson1" Relationship="ShopModel.FK_tblInOut_tblPerson1" FromRole="tblInOut" ToRole="tblPerson" />
+          <NavigationProperty Name="tblPerson2" Relationship="ShopModel.FK_tblInOut_tblPerson2" FromRole="tblInOut" ToRole="tblPerson" />
+          <NavigationProperty Name="tblInOutType" Relationship="ShopModel.FK_tblInOut_tblTypeInOut" FromRole="tblInOut" ToRole="tblInOutType" />
+        </EntityType>
+        <EntityType Name="tblInOutType">
+          <Key>
+            <PropertyRef Name="InOutTypeID" />
+          </Key>
+          <Property Name="InOutTypeID" Type="Int32" Nullable="false" />
+          <Property Name="InOutTypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblInOut" Relationship="ShopModel.FK_tblInOut_tblTypeInOut" FromRole="tblInOutType" ToRole="tblInOut" />
+        </EntityType>
+        <EntityType Name="tblNotification">
+          <Key>
+            <PropertyRef Name="NotificationID" />
+          </Key>
+          <Property Name="NotificationID" Type="Int32" Nullable="false" />
+          <Property Name="NotificationDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsSee" Type="Boolean" Nullable="false" />
+          <Property Name="PersonID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblPerson" Relationship="ShopModel.FK_tblNotif_tblNotification" FromRole="tblNotification" ToRole="tblPerson" />
+        </EntityType>
+        <EntityType Name="tblOrder">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <Property Name="OrderNumber" Type="Int32" Nullable="false" />
+          <Property Name="OrderCost" Type="Double" Nullable="false" />
+          <Property Name="OrderPayDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="OrderDeliveryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="OrderInsertDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PersonID" Type="Int32" Nullable="false" />
+          <Property Name="DiscountID" Type="Int32" Nullable="false" />
+          <Property Name="StatusID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblDiscount" Relationship="ShopModel.FK_tblOrder_tblDiscount" FromRole="tblOrder" ToRole="tblDiscount" />
+          <NavigationProperty Name="tblInOut" Relationship="ShopModel.FK_tblInOut_tblOrder" FromRole="tblOrder" ToRole="tblInOut" />
+          <NavigationProperty Name="tblPerson" Relationship="ShopModel.FK_tblOrder_tblPerson" FromRole="tblOrder" ToRole="tblPerson" />
+          <NavigationProperty Name="tblStatus" Relationship="ShopModel.FK_tblOrder_tblStatus" FromRole="tblOrder" ToRole="tblStatus" />
+          <NavigationProperty Name="tblOrderDetail" Relationship="ShopModel.FK_tblOrderDetail_tblOrder" FromRole="tblOrder" ToRole="tblOrderDetail" />
+        </EntityType>
+        <EntityType Name="tblOrderDetail">
+          <Key>
+            <PropertyRef Name="OrderDetailID" />
+          </Key>
+          <Property Name="OrderDetailID" Type="Int32" Nullable="false" />
+          <Property Name="OrderDetailPrice" Type="Double" Nullable="false" />
+          <Property Name="DiscountID" Type="Int32" />
+          <Property Name="BookID" Type="Int32" Nullable="false" />
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblBook" Relationship="ShopModel.FK_tblOrderDetail_tblBook" FromRole="tblOrderDetail" ToRole="tblBook" />
+          <NavigationProperty Name="tblDiscount" Relationship="ShopModel.FK_tblOrderDetail_tblDiscount" FromRole="tblOrderDetail" ToRole="tblDiscount" />
+          <NavigationProperty Name="tblOrder" Relationship="ShopModel.FK_tblOrderDetail_tblOrder" FromRole="tblOrderDetail" ToRole="tblOrder" />
+        </EntityType>
+        <EntityType Name="tblPerson">
+          <Key>
+            <PropertyRef Name="PersonID" />
+          </Key>
+          <Property Name="PersonID" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tell" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Birthday" Type="DateTime" Precision="0" />
+          <Property Name="IsReviewer" Type="Boolean" />
+          <Property Name="PersonTypeID" Type="Int32" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UserPass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PersonType" Relationship="ShopModel.FK_tblPerson_PersonType" FromRole="tblPerson" ToRole="PersonType" />
+          <NavigationProperty Name="tblComment" Relationship="ShopModel.FK_tblComment_tblPerson" FromRole="tblPerson" ToRole="tblComment" />
+          <NavigationProperty Name="tblDiscount" Relationship="ShopModel.FK_tblDiscount_tblPerson" FromRole="tblPerson" ToRole="tblDiscount" />
+          <NavigationProperty Name="tblInOut" Relationship="ShopModel.FK_tblInOut_tblPerson" FromRole="tblPerson" ToRole="tblInOut" />
+          <NavigationProperty Name="tblInOut1" Relationship="ShopModel.FK_tblInOut_tblPerson1" FromRole="tblPerson" ToRole="tblInOut" />
+          <NavigationProperty Name="tblInOut2" Relationship="ShopModel.FK_tblInOut_tblPerson2" FromRole="tblPerson" ToRole="tblInOut" />
+          <NavigationProperty Name="tblNotification" Relationship="ShopModel.FK_tblNotif_tblNotification" FromRole="tblPerson" ToRole="tblNotification" />
+          <NavigationProperty Name="tblOrder" Relationship="ShopModel.FK_tblOrder_tblPerson" FromRole="tblPerson" ToRole="tblOrder" />
+        </EntityType>
+        <EntityType Name="tblStatus">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="Int32" Nullable="false" />
+          <Property Name="StatusName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblOrder" Relationship="ShopModel.FK_tblOrder_tblStatus" FromRole="tblStatus" ToRole="tblOrder" />
+        </EntityType>
+        <EntityType Name="tblAppVersion">
+          <Key>
+            <PropertyRef Name="AppName" />
+            <PropertyRef Name="AppVersion" />
+            <PropertyRef Name="DatabaseVersion" />
+          </Key>
+          <Property Name="AppName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AppVersion" Type="Double" Nullable="false" />
+          <Property Name="DatabaseVersion" Type="Double" Nullable="false" />
+          <Property Name="AppDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_tblPerson_PersonType">
+          <End Type="ShopModel.PersonType" Role="PersonType" Multiplicity="0..1" />
+          <End Type="ShopModel.tblPerson" Role="tblPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PersonType">
+              <PropertyRef Name="PersonTypeID" />
+            </Principal>
+            <Dependent Role="tblPerson">
+              <PropertyRef Name="PersonTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblCategory_tblBook">
+          <End Type="ShopModel.tblCategory" Role="tblCategory" Multiplicity="1" />
+          <End Type="ShopModel.tblBook" Role="tblBook" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCategory">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="tblBook">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblComment_tblBook">
+          <End Type="ShopModel.tblBook" Role="tblBook" Multiplicity="1" />
+          <End Type="ShopModel.tblComment" Role="tblComment" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="tblBook">
+              <PropertyRef Name="BookID" />
+            </Principal>
+            <Dependent Role="tblComment">
+              <PropertyRef Name="CommentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDiscount_tblBook">
+          <End Type="ShopModel.tblBook" Role="tblBook" Multiplicity="0..1" />
+          <End Type="ShopModel.tblDiscount" Role="tblDiscount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBook">
+              <PropertyRef Name="BookID" />
+            </Principal>
+            <Dependent Role="tblDiscount">
+              <PropertyRef Name="BookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblInOut_tblBook">
+          <End Type="ShopModel.tblBook" Role="tblBook" Multiplicity="1" />
+          <End Type="ShopModel.tblInOut" Role="tblInOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBook">
+              <PropertyRef Name="BookID" />
+            </Principal>
+            <Dependent Role="tblInOut">
+              <PropertyRef Name="BookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrderDetail_tblBook">
+          <End Type="ShopModel.tblBook" Role="tblBook" Multiplicity="1" />
+          <End Type="ShopModel.tblOrderDetail" Role="tblOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBook">
+              <PropertyRef Name="BookID" />
+            </Principal>
+            <Dependent Role="tblOrderDetail">
+              <PropertyRef Name="BookID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblComment_tblComment">
+          <End Type="ShopModel.tblComment" Role="tblComment" Multiplicity="1" />
+          <End Type="ShopModel.tblComment" Role="tblComment1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="tblComment">
+              <PropertyRef Name="CommentID" />
+            </Principal>
+            <Dependent Role="tblComment1">
+              <PropertyRef Name="CommentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblComment_tblPerson">
+          <End Type="ShopModel.tblPerson" Role="tblPerson" Multiplicity="1" />
+          <End Type="ShopModel.tblComment" Role="tblComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPerson">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="tblComment">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblDiscount_tblPerson">
+          <End Type="ShopModel.tblPerson" Role="tblPerson" Multiplicity="0..1" />
+          <End Type="ShopModel.tblDiscount" Role="tblDiscount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPerson">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="tblDiscount">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrder_tblDiscount">
+          <End Type="ShopModel.tblDiscount" Role="tblDiscount" Multiplicity="1" />
+          <End Type="ShopModel.tblOrder" Role="tblOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDiscount">
+              <PropertyRef Name="DiscountID" />
+            </Principal>
+            <Dependent Role="tblOrder">
+              <PropertyRef Name="DiscountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrderDetail_tblDiscount">
+          <End Type="ShopModel.tblDiscount" Role="tblDiscount" Multiplicity="0..1" />
+          <End Type="ShopModel.tblOrderDetail" Role="tblOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblDiscount">
+              <PropertyRef Name="DiscountID" />
+            </Principal>
+            <Dependent Role="tblOrderDetail">
+              <PropertyRef Name="DiscountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblInOut_tblOrder">
+          <End Type="ShopModel.tblOrder" Role="tblOrder" Multiplicity="1" />
+          <End Type="ShopModel.tblInOut" Role="tblInOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOrder">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="tblInOut">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblInOut_tblPerson">
+          <End Type="ShopModel.tblPerson" Role="tblPerson" Multiplicity="1" />
+          <End Type="ShopModel.tblInOut" Role="tblInOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPerson">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="tblInOut">
+              <PropertyRef Name="OwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblInOut_tblPerson1">
+          <End Type="ShopModel.tblPerson" Role="tblPerson" Multiplicity="1" />
+          <End Type="ShopModel.tblInOut" Role="tblInOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPerson">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="tblInOut">
+              <PropertyRef Name="DestStoreID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblInOut_tblPerson2">
+          <End Type="ShopModel.tblPerson" Role="tblPerson" Multiplicity="1" />
+          <End Type="ShopModel.tblInOut" Role="tblInOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPerson">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="tblInOut">
+              <PropertyRef Name="AdminID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblInOut_tblTypeInOut">
+          <End Type="ShopModel.tblInOutType" Role="tblInOutType" Multiplicity="1" />
+          <End Type="ShopModel.tblInOut" Role="tblInOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblInOutType">
+              <PropertyRef Name="InOutTypeID" />
+            </Principal>
+            <Dependent Role="tblInOut">
+              <PropertyRef Name="InOutTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblNotif_tblNotification">
+          <End Type="ShopModel.tblPerson" Role="tblPerson" Multiplicity="1" />
+          <End Type="ShopModel.tblNotification" Role="tblNotification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPerson">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="tblNotification">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrder_tblPerson">
+          <End Type="ShopModel.tblPerson" Role="tblPerson" Multiplicity="1" />
+          <End Type="ShopModel.tblOrder" Role="tblOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPerson">
+              <PropertyRef Name="PersonID" />
+            </Principal>
+            <Dependent Role="tblOrder">
+              <PropertyRef Name="PersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrder_tblStatus">
+          <End Type="ShopModel.tblStatus" Role="tblStatus" Multiplicity="1" />
+          <End Type="ShopModel.tblOrder" Role="tblOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStatus">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="tblOrder">
+              <PropertyRef Name="StatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrderDetail_tblOrder">
+          <End Type="ShopModel.tblOrder" Role="tblOrder" Multiplicity="1" />
+          <End Type="ShopModel.tblOrderDetail" Role="tblOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOrder">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="tblOrderDetail">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ShopModelStoreContainer" CdmEntityContainer="ShopEntities">
-          <EntitySetMapping Name="tblVersion">
-            <EntityTypeMapping TypeName="ShopModel.tblVersion">
-              <MappingFragment StoreEntitySet="tblVersion">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="versionExe" ColumnName="versionExe" />
-                <ScalarProperty Name="versionDatabase" ColumnName="versionDatabase" />
-                <ScalarProperty Name="versionWeb" ColumnName="versionWeb" />
+        <EntitySetMapping Name="PersonType">
+            <EntityTypeMapping TypeName="ShopModel.PersonType">
+              <MappingFragment StoreEntitySet="PersonType">
+                <ScalarProperty Name="PersonTypeName" ColumnName="PersonTypeName" />
+                <ScalarProperty Name="PersonTypeID" ColumnName="PersonTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBook">
+            <EntityTypeMapping TypeName="ShopModel.tblBook">
+              <MappingFragment StoreEntitySet="tblBook">
+                <ScalarProperty Name="BookLanguage" ColumnName="BookLanguage" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="IsShowing" ColumnName="IsShowing" />
+                <ScalarProperty Name="BookPicture" ColumnName="BookPicture" />
+                <ScalarProperty Name="PageNumber" ColumnName="PageNumber" />
+                <ScalarProperty Name="Summary" ColumnName="Summary" />
+                <ScalarProperty Name="PieceOfBook" ColumnName="PieceOfBook" />
+                <ScalarProperty Name="PrintTurns" ColumnName="PrintTurns" />
+                <ScalarProperty Name="ISBN" ColumnName="ISBN" />
+                <ScalarProperty Name="Translator" ColumnName="Translator" />
+                <ScalarProperty Name="Writer" ColumnName="Writer" />
+                <ScalarProperty Name="Publisher" ColumnName="Publisher" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="LatinName" ColumnName="LatinName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCategory">
+            <EntityTypeMapping TypeName="ShopModel.tblCategory">
+              <MappingFragment StoreEntitySet="tblCategory">
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblComment">
+            <EntityTypeMapping TypeName="ShopModel.tblComment">
+              <MappingFragment StoreEntitySet="tblComment">
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
+                <ScalarProperty Name="CommentDate" ColumnName="CommentDate" />
+                <ScalarProperty Name="CommentDisLike" ColumnName="CommentDisLike" />
+                <ScalarProperty Name="CommentLike" ColumnName="CommentLike" />
+                <ScalarProperty Name="CommentDescription" ColumnName="CommentDescription" />
+                <ScalarProperty Name="CommentID" ColumnName="CommentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblDiscount">
+            <EntityTypeMapping TypeName="ShopModel.tblDiscount">
+              <MappingFragment StoreEntitySet="tblDiscount">
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="DiscountEndDate" ColumnName="DiscountEndDate" />
+                <ScalarProperty Name="DiscountStartDate" ColumnName="DiscountStartDate" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="DiscountPersent" ColumnName="DiscountPersent" />
+                <ScalarProperty Name="DiscountID" ColumnName="DiscountID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblInOut">
+            <EntityTypeMapping TypeName="ShopModel.tblInOut">
+              <MappingFragment StoreEntitySet="tblInOut">
+                <ScalarProperty Name="AdminID" ColumnName="AdminID" />
+                <ScalarProperty Name="InOutTypeID" ColumnName="InOutTypeID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
+                <ScalarProperty Name="DestStoreID" ColumnName="DestStoreID" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="InOutDate" ColumnName="InOutDate" />
+                <ScalarProperty Name="InOutTime" ColumnName="InOutTime" />
+                <ScalarProperty Name="BookNumber" ColumnName="BookNumber" />
+                <ScalarProperty Name="StoreID" ColumnName="StoreID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblInOutType">
+            <EntityTypeMapping TypeName="ShopModel.tblInOutType">
+              <MappingFragment StoreEntitySet="tblInOutType">
+                <ScalarProperty Name="InOutTypeName" ColumnName="InOutTypeName" />
+                <ScalarProperty Name="InOutTypeID" ColumnName="InOutTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblNotification">
+            <EntityTypeMapping TypeName="ShopModel.tblNotification">
+              <MappingFragment StoreEntitySet="tblNotification">
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="IsSee" ColumnName="IsSee" />
+                <ScalarProperty Name="NotificationDescription" ColumnName="NotificationDescription" />
+                <ScalarProperty Name="NotificationID" ColumnName="NotificationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblOrder">
+            <EntityTypeMapping TypeName="ShopModel.tblOrder">
+              <MappingFragment StoreEntitySet="tblOrder">
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="DiscountID" ColumnName="DiscountID" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+                <ScalarProperty Name="OrderInsertDate" ColumnName="OrderInsertDate" />
+                <ScalarProperty Name="OrderDeliveryDate" ColumnName="OrderDeliveryDate" />
+                <ScalarProperty Name="OrderPayDate" ColumnName="OrderPayDate" />
+                <ScalarProperty Name="OrderCost" ColumnName="OrderCost" />
+                <ScalarProperty Name="OrderNumber" ColumnName="OrderNumber" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblOrderDetail">
+            <EntityTypeMapping TypeName="ShopModel.tblOrderDetail">
+              <MappingFragment StoreEntitySet="tblOrderDetail">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
+                <ScalarProperty Name="DiscountID" ColumnName="DiscountID" />
+                <ScalarProperty Name="OrderDetailPrice" ColumnName="OrderDetailPrice" />
+                <ScalarProperty Name="OrderDetailID" ColumnName="OrderDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPerson">
+            <EntityTypeMapping TypeName="ShopModel.tblPerson">
+              <MappingFragment StoreEntitySet="tblPerson">
+                <ScalarProperty Name="UserPass" ColumnName="UserPass" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="PersonTypeID" ColumnName="PersonTypeID" />
+                <ScalarProperty Name="IsReviewer" ColumnName="IsReviewer" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Tell" ColumnName="Tell" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="PersonID" ColumnName="PersonID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblStatus">
+            <EntityTypeMapping TypeName="ShopModel.tblStatus">
+              <MappingFragment StoreEntitySet="tblStatus">
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAppVersion">
+            <EntityTypeMapping TypeName="ShopModel.tblAppVersion">
+              <MappingFragment StoreEntitySet="tblAppVersion">
+                <ScalarProperty Name="AppDescription" ColumnName="AppDescription" />
+                <ScalarProperty Name="DatabaseVersion" ColumnName="DatabaseVersion" />
+                <ScalarProperty Name="AppVersion" ColumnName="AppVersion" />
+                <ScalarProperty Name="AppName" ColumnName="AppName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -58,7 +1194,7 @@
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <Connection>
       <DesignerInfoPropertySet>
-        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="CopyToOutputDirectory" />
       </DesignerInfoPropertySet>
     </Connection>
     <Options>
